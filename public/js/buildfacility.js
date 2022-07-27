@@ -355,6 +355,7 @@ function setRoomsData(id) {
     });
 }
 
+
 //get user profile
 function setUserData() {
     //session storage file
@@ -369,13 +370,19 @@ function setUserData() {
         firebase.database().ref('users/' + getUserUid()).once('value').then(function(snapshot) {
             var username = (snapshot.val() && snapshot.val().name) || '訪客';
             var userphoto = (snapshot.val() && snapshot.val().profilePicUrl);
-            var position = (snapshot.val() && snapshot.val().position);
             sessionStorage.setItem('userName', username);
             sessionStorage.setItem('userPhoto', userphoto);
-            sessionStorage.setItem('position', position);
             displayname.textContent = username;
             displayphoto.src = userphoto;
-
+        });
+        firebase.database().ref('position/' + getUserUid()).once('value').then(function(snapshot) {
+            if (snapshot.exists()) {
+                var position = snapshot.val();
+                sessionStorage.setItem('userposition', userposition)
+            } else {
+                var position = '訪客'
+                sessionStorage.setItem('userposition', userposition)
+            }
             if (position == "管理員" || position == "房務") {
                 //set rent data button
                 var p = document.getElementById("setRentProDiv");

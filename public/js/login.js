@@ -16,68 +16,8 @@ firebase.analytics();
 // google sign in need to consider save user information
 var googleSignInTask = false;
 
-/**
- * Handles the out focus element.
- */
-function emailFocusOut() {
-    var email = document.getElementById('email').value;
-    var emailWrong = document.getElementById('emailWrong');
-    if (email.length < 4 || email.indexOf("@") == -1) {
-        emailWrong.removeAttribute("hidden");
-    } else {
-        emailWrong.setAttribute('hidden', 'true');
-    }
-}
-
-
-/**
- * Handles the sign up button press.
- */
-function handleSignIn() {
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    var passwordWrong = document.getElementById('passwordWrong');
-    var emailWrong = document.getElementById('emailWrong');
-
-    passwordWrong.setAttribute('hidden', 'true');
-    emailWrong.setAttribute('hidden', 'true');
-
-    if (email.length < 4 || email.indexOf("@") == -1) {
-        emailWrong.removeAttribute("hidden");
-    } else {
-        // Create user with email and pass.
-        // [START createwithemail]
-        console.log("save now");
-        firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
-            if (user) {
-
-                console.log("login")
-
-            }
-        }, function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // [START_EXCLUDE]
-            if (errorCode === 'auth/wrong-password') {
-                passwordWrong.removeAttribute("hidden");
-            } else if (errorCode === 'auth/network-request-failed') {
-                alert("網路不穩定");
-            } else if (errorCode === 'auth/user-not-found') {
-                emailWrong.removeAttribute("hidden");
-            } else {
-                alert(errorMessage);
-            }
-            console.log(error);
-            // [END_EXCLUDE]
-        });
-
-    }
-
-}
 
 function handleGoogleSignIn() {
-
     if (!firebase.auth().currentUser) {
         console.log("Start login")
         sessionStorage.setItem('login_task', true);
@@ -86,17 +26,10 @@ function handleGoogleSignIn() {
         provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
         firebase.auth().languageCode = 'zh-TW';
         firebase.auth().signInWithRedirect(provider);
-        // firebase.auth().getRedirectResult()
-        // firebase.auth().signInWithPopup(provider).then(function(result) 
     } else {
         firebase.auth().signOut();
     }
     document.getElementById("sign-in-google").disabled = true
-
-
-
-
-
 }
 
 function saveUserInformation(user) {
@@ -104,7 +37,6 @@ function saveUserInformation(user) {
         id: getUserUid(),
         name: user.displayName,
         email: user.email,
-        position: "訪客",
         profilePicUrl: user.photoURL || 'img/profile_placeholder.png',
         timestamp: firebase.database.ServerValue.TIMESTAMP
     }).then(function() {
@@ -113,7 +45,6 @@ function saveUserInformation(user) {
         alert("登入失敗！");
         console.error('Error writing user data to database', error);
     });
-
 }
 
 function getUserUid() {
@@ -121,8 +52,6 @@ function getUserUid() {
 }
 
 function initApp() {
-
-    // document.getElementById('sign-in').addEventListener('click', handleSignIn, false);
     document.getElementById('sign-in-google').addEventListener('click', handleGoogleSignIn, false);
     if (sessionStorage.getItem('login_task')) {
         $("#uploadModal").modal()

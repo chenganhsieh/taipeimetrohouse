@@ -327,14 +327,23 @@ function setTaskFinish(id, deleteElement) {
 // if position is not admin, back to main.html
 function checkUserPosition() {
     var userId = getUserUid();
-    var position = '';
-    return firebase.database().ref('/users/' + userId + '/position').once('value').then(function(snapshot) {
-        position = (snapshot.val()) || 'Anonymous';
-        if (position != "管理員" && position != "會計") {
-            window.location.href = './main.html';
-            return;
+    return firebase.database().ref('position/' + userId).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+            let position = snapshot.val();
+            if (position != "管理員" && position != "會計") {
+                window.location.href = './404.html';
+                return;
+            }
+        } else {
+            let position = '訪客';
+            if (position != "管理員" && position != "會計") {
+                window.location.href = './404.html';
+                return;
+            }
         }
+
     });
+
 }
 
 function upLoadEleData() {
@@ -1098,11 +1107,11 @@ function setRentsData() {
 }
 
 
-//get user profile
 function setUserData() {
     //session storage file
     var storageName = sessionStorage.getItem('userName');
     var storagePhoto = sessionStorage.getItem('userPhoto');
+
     //html element
     var displayname = document.getElementById("displayname");
     var displayphoto = document.getElementById("displayImage");
@@ -1116,9 +1125,17 @@ function setUserData() {
             displayname.textContent = username;
             displayphoto.src = userphoto;
         });
+        firebase.database().ref('position/' + getUserUid()).once('value').then(function(snapshot) {
+            if (snapshot.exists()) {
+                let userposition = snapshot.val();
+                sessionStorage.setItem('userposition', userposition)
+            } else {
+                let userposition = '訪客'
+                sessionStorage.setItem('userposition', userposition)
+            }
+        });
         return;
     }
-
     displayname.textContent = storageName;
     displayphoto.src = storagePhoto;
 }

@@ -374,6 +374,7 @@ function setUserData() {
     //session storage file
     var storageName = sessionStorage.getItem('userName');
     var storagePhoto = sessionStorage.getItem('userPhoto');
+
     //html element
     var displayname = document.getElementById("displayname");
     var displayphoto = document.getElementById("displayImage");
@@ -386,6 +387,15 @@ function setUserData() {
             sessionStorage.setItem('userPhoto', userphoto);
             displayname.textContent = username;
             displayphoto.src = userphoto;
+        });
+        firebase.database().ref('position/' + getUserUid()).once('value').then(function(snapshot) {
+            if (snapshot.exists()) {
+                let userposition = snapshot.val();
+                sessionStorage.setItem('userposition', userposition)
+            } else {
+                let userposition = '訪客'
+                sessionStorage.setItem('userposition', userposition)
+            }
         });
         return;
     }

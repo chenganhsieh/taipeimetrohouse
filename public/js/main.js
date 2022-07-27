@@ -30,9 +30,16 @@ function getUserUid() {
 }
 
 function getUserPosition() {
-    return firebase.database().ref('/users/' + getUserUid()).once('value').then(function(snapshot) {
-        let position = (snapshot.val().position) || '訪客';
-        return position
+    return firebase.database().ref('/position/' + getUserUid()).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+            let position = snapshot.val();
+            console.log(position)
+            return position
+        } else {
+            let position = '訪客';
+            console.log(position)
+            return position
+        }
     });
 }
 
@@ -294,31 +301,38 @@ function setEventData() {
     });
 }
 
-//get user profile
+// set user profile
 function setUserData() {
     //session storage file
     var storageName = sessionStorage.getItem('userName');
     var storagePhoto = sessionStorage.getItem('userPhoto');
-    var position = sessionStorage.getItem('position');
+
     //html element
     var displayname = document.getElementById("displayname");
     var displayphoto = document.getElementById("displayImage");
 
-    if (!storageName || !storagePhoto || !position) {
+    if (!storageName || !storagePhoto) {
         firebase.database().ref('users/' + getUserUid()).once('value').then(function(snapshot) {
             var username = (snapshot.val() && snapshot.val().name) || '訪客';
             var userphoto = (snapshot.val() && snapshot.val().profilePicUrl);
-            var position = (snapshot.val() && snapshot.val().position);
             sessionStorage.setItem('userName', username);
             sessionStorage.setItem('userPhoto', userphoto);
-            sessionStorage.setItem('position', position);
             displayname.textContent = username;
             displayphoto.src = userphoto;
         });
-    } else {
-        displayname.textContent = storageName;
-        displayphoto.src = storagePhoto;
+        firebase.database().ref('position/' + getUserUid()).once('value').then(function(snapshot) {
+            if (snapshot.exists()) {
+                let userposition = snapshot.val();
+                sessionStorage.setItem('position', userposition)
+            } else {
+                let userposition = '訪客'
+                sessionStorage.setItem('position', userposition)
+            }
+        });
+        return;
     }
+    displayname.textContent = storageName;
+    displayphoto.src = storagePhoto;
 }
 //get user profile
 function setRentData(id) {
@@ -376,8 +390,12 @@ function formatTime(date, need_hhmm = true) {
 function checkUserPosition() {
     var userId = getUserUid();
     var position = '';
-    return firebase.database().ref('/users/' + userId + '/position').once('value').then(function(snapshot) {
-        position = (snapshot.val()) || 'Anonymous';
+    return firebase.database().ref('position/' + userId).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+            position = snapshot.val();
+        } else {
+            position = '訪客';
+        }
 
         var to_do = '<a class="nav-link" href="tasks.html">' +
             '<i class="fas fa-fw fa-tachometer-alt"></i>' +

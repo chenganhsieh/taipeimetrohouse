@@ -111,13 +111,13 @@ function setUsersData() {
             var users_amount = snapshot.numChildren()
             var temp_amount = 0
             var houses_ids = []
+            console.log(users_amount)
 
             snapshot.forEach(function(childSnapshot) {
                 temp_amount += 1
                 var id = (childSnapshot.val() && childSnapshot.val().id);
                 var username = (childSnapshot.val() && childSnapshot.val().name) || '訪客';
                 var email = (childSnapshot.val() && childSnapshot.val().email) || '無';
-                var position = (childSnapshot.val() && childSnapshot.val().position) || '訪客';
                 var housevalue = (childSnapshot.val() && childSnapshot.val().housevalue) || '不限制';
                 var roomvalue = (childSnapshot.val() && childSnapshot.val().roomvalue) || '';
                 var specificId = email.split("@")[0]
@@ -126,72 +126,80 @@ function setUsersData() {
                 if (user_status == "管理員") {
                     html += '<i class="fas fa-edit ml-2" id="fixname_' + id + '"></i>'
                 }
-                html +=
-                    '</td>' +
-                    '<td>' + email + '</td>' +
-                    '<td><select class="custom-select d-block" id="' + specificId + '" required>' +
-                    '<option value="' + position + '" selected  disabled hidden>' + position + '</option>' +
-                    '<option>管理員</option>' +
-                    '<option>會計</option>' +
-                    '<option>房務</option>' +
-                    '<option>工務</option>' +
-                    '<option>訪客</option>' +
-                    '</select></td>' +
-
-                    '<td><select class="custom-select d-block" id="buildTaskRooms_' + specificId + '" required>' +
-                    '<option value="' + housevalue + '" selected>' + housevalue + '</option>' +
-                    '</select></td>' +
-
-                    '<td><select class="custom-select d-block" id="buildTaskRoomsNum_' + specificId + '" required>' +
-                    '<option value="' + roomvalue + '" selected>' + roomvalue + '</option>' +
-                    '</select></td>' +
-
-                    '<td><button class="btn btn-primary" type="button" id="' + specificId + 'button">確認修改</button></td>';
-                // ...
-                var p = document.getElementById("usersData");
-                var newElement = document.createElement("tr");
-                newElement.innerHTML = html;
-                p.appendChild(newElement);
-                document.getElementById(specificId + 'button').addEventListener('click', function() { saveUserPosition(id, specificId) }, false);
-                houses_ids.push('buildTaskRooms_' + specificId)
-                if (temp_amount == users_amount) {
-                    $('#dataTable').DataTable()
-                    setHousesData(houses_ids)
-                }
-                document.getElementById('buildTaskRooms_' + specificId).addEventListener('change', function() { changeRoomNum('buildTaskRooms_' + specificId, 'buildTaskRoomsNum_' + specificId) }, false);
-                $('#fixname_' + id).off('click').click(function() {
-                    var newElement = document.createElement('input');
-                    var modal = document.getElementById("fix_modal_div")
-                    if (modal.childElementCount == 3) {
-                        modal.removeChild(modal.childNodes[2]);
+                firebase.database().ref('position/' + id).once('value').then(function(snapshot) {
+                    if (snapshot.exists()) {
+                        var position = snapshot.val();
+                    } else {
+                        var position = '訪客';
                     }
-                    document.getElementById("fix_modal_label").innerHTML = "修改姓名"
-                    newElement.setAttribute('id', "fix_modal_data");
-                    newElement.setAttribute('class', 'form-control');
-                    newElement.setAttribute('type', "text");
-                    newElement.value = username;
-                    modal.insertBefore(newElement, modal.childNodes[2]);
+                    html +=
+                        '</td>' +
+                        '<td>' + email + '</td>' +
+                        '<td><select class="custom-select d-block" id="' + specificId + '" required>' +
+                        '<option value="' + position + '" selected  disabled hidden>' + position + '</option>' +
+                        '<option>管理員</option>' +
+                        '<option>會計</option>' +
+                        '<option>房務</option>' +
+                        '<option>工務</option>' +
+                        '<option>訪客</option>' +
+                        '</select></td>' +
 
-                    $("#fix_modal_check").off('click').click(function() {
-                        var fix_data = document.getElementById('fix_modal_data').value;
-                        var updates_data = {}
-                        updates_data['name'] = fix_data
-                        updates_data['edit_person'] = getUserName()
-                        updates_data['timestamp'] = firebase.database.ServerValue.TIMESTAMP
-                            //one for now rent data and another for history
-                        firebase.database().ref('users/' + id).update(updates_data).then(function() {
+                        '<td><select class="custom-select d-block" id="buildTaskRooms_' + specificId + '" required>' +
+                        '<option value="' + housevalue + '" selected>' + housevalue + '</option>' +
+                        '</select></td>' +
+
+                        '<td><select class="custom-select d-block" id="buildTaskRoomsNum_' + specificId + '" required>' +
+                        '<option value="' + roomvalue + '" selected>' + roomvalue + '</option>' +
+                        '</select></td>' +
+
+                        '<td><button class="btn btn-primary" type="button" id="' + specificId + 'button">確認修改</button></td>';
+                    // ...
+                    var p = document.getElementById("usersData");
+                    var newElement = document.createElement("tr");
+                    newElement.innerHTML = html;
+                    p.appendChild(newElement);
+                    document.getElementById(specificId + 'button').addEventListener('click', function() { saveUserPosition(id, specificId) }, false);
+                    houses_ids.push('buildTaskRooms_' + specificId)
+                    if (temp_amount == users_amount) {
+                        $('#dataTable').DataTable()
+                        setHousesData(houses_ids)
+                    }
+                    document.getElementById('buildTaskRooms_' + specificId).addEventListener('change', function() { changeRoomNum('buildTaskRooms_' + specificId, 'buildTaskRoomsNum_' + specificId) }, false);
+                    $('#fixname_' + id).off('click').click(function() {
+                        var newElement = document.createElement('input');
+                        var modal = document.getElementById("fix_modal_div")
+                        if (modal.childElementCount == 3) {
+                            modal.removeChild(modal.childNodes[2]);
+                        }
+                        document.getElementById("fix_modal_label").innerHTML = "修改姓名"
+                        newElement.setAttribute('id', "fix_modal_data");
+                        newElement.setAttribute('class', 'form-control');
+                        newElement.setAttribute('type', "text");
+                        newElement.value = username;
+                        modal.insertBefore(newElement, modal.childNodes[2]);
+
+                        $("#fix_modal_check").off('click').click(function() {
+                            var fix_data = document.getElementById('fix_modal_data').value;
+                            var updates_data = {}
+                            updates_data['name'] = fix_data
+                            updates_data['edit_person'] = getUserName()
+                            updates_data['timestamp'] = firebase.database.ServerValue.TIMESTAMP
+                                //one for now rent data and another for history
+                            firebase.database().ref('users/' + id).update(updates_data).then(function() {
+                                $("#fix_data_modal .close").click();
+                            }).catch(function(error) {
+                                alert(error);
+                            });
+                        })
+                        $("#fix_modal_cancel").off('click').click(function() {
                             $("#fix_data_modal .close").click();
-                        }).catch(function(error) {
-                            alert(error);
-                        });
-                    })
-                    $("#fix_modal_cancel").off('click').click(function() {
-                        $("#fix_data_modal .close").click();
-                    })
-                    $("#fix_data_modal").modal();
-
+                        })
+                        $("#fix_data_modal").modal();
+                    });
                 });
             })
+        }, function(error) {
+            console.error(error);
         });
     });
 }
@@ -214,15 +222,33 @@ function saveUserPosition(userId, selectorId) {
 
 
     firebase.database().ref('users/' + userId).update({
-            position: positionvalue,
             housevalue: housevalue,
             roomvalue: roomvalue,
             edit_person: getUserName()
         })
         .then(function(snapshot) {
-            $("#uploadModal .close").click();
-            // show success alert
-            $('#dataUploadModal').modal();
+            firebase.database().ref('position/').update({
+                [userId]: positionvalue
+            }).then(function(snapshot) {
+                $("#uploadModal .close").click();
+                // show success alert
+                $('#dataUploadModal').modal();
+            }).catch(function(error) {
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                        // User doesn't have permission to access the object
+                        alert("您沒有權限");
+                        break;
+                    case 'storage/canceled':
+                        // User canceled the upload
+                        alert("網路不佳，您已取消上傳");
+                        break;
+                    case 'storage/unknown':
+                        // Unknown error occurred, inspect error.serverResponse
+                        alert("未知錯誤");
+                        break;
+                }
+            });
         }).catch(function(error) {
             switch (error.code) {
                 case 'storage/unauthorized':
@@ -255,22 +281,28 @@ function getUserName() {
 }
 // console.log(getUserPosition())
 function getUserPosition() {
-    return firebase.database().ref('/users/' + getUserUid()).once('value').then(function(snapshot) {
-        let position = (snapshot.val().position) || '訪客';
-        return position
-    });
-}
-// if position is not admin, back to main.html
-function checkUserPosition() {
-    var userId = getUserUid();
-    var position = '';
-    return firebase.database().ref('/users/' + userId + '/position').once('value').then(function(snapshot) {
-        position = (snapshot.val()) || 'Anonymous';
-        if (position != "管理員") {
-            window.location.href = './main.html';
-            return;
+    return firebase.database().ref('position/' + getUserUid()).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+            let position = snapshot.val();
+            console.log(position)
+            return position
+        } else {
+            let position = '訪客';
+            console.log(position)
+            return position
         }
     });
+}
+
+// if position is not admin, back to main.html
+function checkUserPosition() {
+    let position = getUserPosition();
+    position.then(data => {
+        if (data != "管理員") {
+            window.location.href = './404.html';
+            return;
+        }
+    })
 }
 //change room num
 function changeRoomNum(htmlhouseid, roomId) {
@@ -341,12 +373,19 @@ function setUserData() {
         firebase.database().ref('users/' + getUserUid()).once('value').then(function(snapshot) {
             var username = (snapshot.val() && snapshot.val().name) || '訪客';
             var userphoto = (snapshot.val() && snapshot.val().profilePicUrl);
-            var userposition = (snapshot.val() && snapshot.val().position) || '訪客';
             sessionStorage.setItem('userName', username);
             sessionStorage.setItem('userPhoto', userphoto);
-            sessionStorage.setItem('userposition', userposition)
             displayname.textContent = username;
             displayphoto.src = userphoto;
+        });
+        firebase.database().ref('position/' + getUserUid()).once('value').then(function(snapshot) {
+            if (snapshot.exists()) {
+                let userposition = snapshot.val();
+                sessionStorage.setItem('position', userposition)
+            } else {
+                let userposition = '訪客'
+                sessionStorage.setItem('position', userposition)
+            }
         });
         return;
     }
@@ -373,11 +412,9 @@ function initApp() {
             window.location.href = './login.html';
             return;
         }
-        setUserData();
         checkUserPosition();
+        setUserData();
         setUsersData();
-        //console.log(getUserPosition())
-
     });
 }
 
