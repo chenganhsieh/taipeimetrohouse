@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="人性化房務管理">
+    <meta name="author" content="pigoo833">
+
+    <title>大都會物業房務管理系統</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="icon" href="img/logo.jpg" />
+
+    <!-- Custom styles for this template-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">大都會物業房務管理系統</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active" id="nav_bar_item">
+
+            </li>
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+                            </div>
+                        </div>
+                    </form> -->
+                    <ul class="navbar-nav mr-auto nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="rooms">指派</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="undone_task">待處理</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="finish_task">已完成</a>
+                        </li>
+                    </ul>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 h4" id="displayname"></span>
+                                <img class="img-profile rounded-circle" src="./img/profile_placeholder.png" id="displayImage">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <!-- <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
+                                </a> -->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800" id="header_title">房型列表</h1>
+                        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+                    </div>
+
+                    <!-- Content Row -->
+
+                    <div class="card-deck" id="house_deck">
+                        <!-- <div class="card border-left-success shadow py-2" style="min-width: 18rem;">
+                            <div class="hovereffect" runat="server">
+                                <img class="card-img-top" src="./img/home2.jpg" alt="Card image cap">
+                                <div class="overlay text-center" id="' + id + '">
+                                    <p class="mt-5 text-center">查看詳情</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-lg font-weight-bold text-primary text-uppercase mb-1"> name</div>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">間數: amount </div>
+                                        <div class="row">
+                                            <div class="col-8 mt-2 mb-0 text-center"><button class="btn btn-primary btn-block" type="button" id="' + roomId[i] + '">1號設備</button></div>
+                                            <button class="col-4 mt-2 btn-primary btn btn-block">修繕</button>
+                                        </div>
+
+                                        <div class="h6 mb-0 text-gray-600 mt-2">更新時間: </div>
+                                        <div class="h6 mb-0 text-gray-600 mt-2">time</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+
+                    </div>
+
+                    <!--Not finished task -->
+                    <div hidden class="card shadow mb-4" id="undone_deck">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">待處理列表</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="task_table" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>種類</th>
+                                            <th>處理狀態</th>
+                                            <th>打掃日期</th>
+                                            <th>房源</th>
+                                            <th>處理人員</th>
+                                            <th>查看詳情</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="taskIngData">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div hidden class="card shadow mb-4" id="done_deck">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">已完成任務</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="task_finish_table" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>種類</th>
+                                            <th>處理狀態</th>
+                                            <th>打掃日期</th>
+                                            <th>房源</th>
+                                            <th>處理人員</th>
+                                            <th>查看詳情</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="taskFinishData">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Pigoo833 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">確定登出嗎?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">記得儲存您的資料再登出</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" type="button" id="logout">登出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- House Modal-->
+    <div class="modal fade" id="houseModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">案件名稱</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="name">案名</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="houseModalName">4號房間</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="type">類型</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalType">Airbnb</div>
+                            <div hidden>
+                                <select class="custom-select d-block w-100" id="type" required>
+                                <option value="" >選擇...</option>
+                                <option>Airbnb</option>
+                                <option>長租</option>
+                                <option>購置長租</option>
+                                <option>長租代管</option>
+                            </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="amount">間數</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalAmount">3</div>
+                            <div hidden>
+                                <select class="custom-select d-block w-100" id="amount" required>
+                                <option value="" >選擇...</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address">地址</label>
+                        <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalAddress">新北市</div>
+                        <div hidden class="input-group">
+                            <input type="text" class="form-control" id="address" placeholder="地址" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="waternum">水號</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalWaternum">0</div>
+                            <input hidden type="number" class="form-control" id="waternum" placeholder="" value="" required>
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="electricnum">電號</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalElectricNum">0</div>
+                            <input hidden type="number" class="form-control" id="electricnum" placeholder="" value="" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="gasnum">瓦斯</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalGasNum">0</div>
+                            <input hidden type="number" class="form-control" id="gasnum" placeholder="" value="" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="cleancost">管理/清潔費</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalCleanCost">0</div>
+                            <div hidden class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control" id="cleancost" placeholder="0" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="networkprovider">網路第四台</label>
+                        <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalNetworkProvider">None</div>
+                        <div class="input-group">
+                            <input hidden type="text" class="form-control" id="networkprovider" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="wifiname">Wifi名稱</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalwifiname">None</div>
+                            <input hidden type="text" class="form-control" id="wifiname" placeholder="" value="" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="wifipassword">Wifi密碼</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="houseModalwifipassword">0</div>
+                            <input hidden type="number" class="form-control" id="wifipassword" placeholder="" value="" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="doorpassword">大門密碼</label>
+                        <div class="text-lg font-weight-bold text-primary mb-1" id="houseModaldoorpassword">0</div>
+                        <div class="input-group">
+                            <input hidden type="number" class="form-control " id="doorpassword" placeholder=" " required>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" type="button" id="fixData">修改資料</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waiting Uploading Modal -->
+    <div class="modal" id="uploadModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="upload_modal_label">上傳中請稍候...</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        
+                    </button>
+                </div>
+
+                <div class="modal-body text-center">
+                    <div class="spinner-grow text-primary col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-secondary col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-success col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-danger col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-warning col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-info col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- success Modal-->
+    <div class="modal fade" id="dataUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <h5 class="modal-title ">資料新增成功!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="upLoadSuccess">
+        <span aria-hidden="true">×</span>
+      </button>
+                </div>
+                <div class="modal-body">已將資料上傳</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Rooms Modal-->
+    <div class="modal fade" id="room_device_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="room_device_header">房間名稱</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_aircon">冷氣</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_aircon">Heran</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_1_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_2_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_3_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_aircon_ctlr">冷氣遙控器</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_aircon_ctrl">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_4_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_5_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_6_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_tv">電視</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_tv">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_7_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_8_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_9_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_tv_control">電視遙控器</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_tv_control">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_10_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_11_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_12_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_tv_box">機上盒遙控器</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_tv_box">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_13_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_14_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_15_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_wash">洗衣機</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_wash">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_16_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_17_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_18_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_dry">烘衣機</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_dry">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_19_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_20_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_21_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_ind_sv">電磁爐</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_ind_sv">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_22_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_23_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_24_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_wave">微波爐</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_wave">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_25_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_26_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_27_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_fresh">冰箱</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_fresh">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_28_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_29_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_30_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_fast_heat">快煮壺</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_fast_heat">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_31_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_32_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_33_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_iron">熨斗</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_iron">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_34_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_35_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_36_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_warm">電暖器</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_warm">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_37_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_38_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_39_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_toilet">馬桶</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_toilet">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_40_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_41_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_42_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_toilet_wat">馬桶水箱</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_toilet_wat">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_43_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_44_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_45_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_toilet_pro">免治馬桶</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_toilet_pro">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_46_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_47_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_48_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_hot">電熱水器</label>
+                            <div class="text-lg font-weight-bold text-primary  mb-1" id="room_hot">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_49_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_50_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_51_device_button">維修</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label for="room_wifi">WIFI</label>
+                            <div class="text-lg font-weight-bold text-primary  mb-1" id="room_wifi">無</div>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-secondary mt-4" id="room_52_device_button">修改</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-success mt-4" id="room_53_device_button">移轉</button>
+                        </div>
+                        <div class="col-2 mb-3">
+                            <button class="btn btn-warning mt-4" id="room_54_device_button">維修</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button class="btn btn-danger" type="button" id="fixData">刪除</button> -->
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BuildTask Modal-->
+    <div class="modal fade" id="build_task_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="build_task_header">房間名稱</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-6 col-md-6 mb-3">
+                            <label for="buildTaskStatus">目前狀態</label>
+                            <div>
+                                <p style="font-size:1em;" id="buildTaskStatus">待處理</p>
+                            </div>
+                            <!-- <select class="custom-select d-block w-100" id="buildTaskStatus" required>
+                                    <option value="" >選擇...</option>
+                                    <option value="待處理">待處理</option>
+                                    <option value="處理中">處理中</option>
+                                    </select> -->
+                            <div>
+                                <p hidden style="font-size:1em; color:red;" id="buildTaskStatusWrong">請選擇狀態</p>
+                            </div>
+
+                        </div>
+                        <div class="col-6 col-md-6  mb-3">
+                            <label for="buildTaskdate">打掃日</label>
+                            <input type="date" class="form-control" id="buildTaskdate" placeholder="" value="" required>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildTaskdateWrong">請選擇日期</p>
+                            </div>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="buildTaskMoney">金額</label>
+                            <input type="number" class="form-control" id="buildTaskMoney" placeholder="0" value="" required>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildTaskMoneyWrong">金額不得為0</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 mb-3">
+                            <label for="buildTaskPerson">打掃人員</label>
+                            <select class="custom-select d-block w-100" id="buildTaskPerson" required>
+                                    <option value="" >選擇...</option>
+                                    <option value="不指定">不指定</option>
+                                    </select>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildTaskPersonWrong">請選擇工作人員</p>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="buildCleanNote">備註</label>
+                            <input type="text" class="form-control" id="buildCleanNote" placeholder="備註" value="" required>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" type="button" id="task_assign_btn">指派清潔事項</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BuildTask Detail Modal-->
+    <div class="modal fade" id="build_task_detail_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="task_name">案件名稱</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3 text-center">
+                            <label for="task_status">狀態</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="task_status">"未處理"</div>
+                        </div>
+                        <hr class="sidebar-divider col-md-12 mt-0 mb-0">
+                        <div class="col-md-4 mb-3">
+                            <label for="task_date">反應日期</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="task_date">2020/01/01</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="task_room">房源</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="task_room">1號房間
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="task_person">指派者</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="task_person">解正安
+                            </div>
+                        </div>
+                        <hr class="sidebar-divider col-md-12 mt-0 mb-0">
+                        <div class="col-md-6 mb-3">
+                            <label for="task_deal_date">處理日期</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="task_deal_date">水管漏水
+                                <i class='fas fa-angle-right'></i>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="task_deal_person">處理人員</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="task_deal_person">解正安
+                                <i class='fas fa-angle-right'></i>
+                            </div>
+                        </div>
+                        <hr class="sidebar-divider col-md-12 mt-0 mb-0">
+                        <div class="col-md-6 mb-3">
+                            <label for="task_deal_note">備註</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="task_deal_note">備註
+                                <i class='fas fa-angle-right'></i>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="task_deal_fee">費用</label>
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="task_deal_fee">$100
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" id="del_data">刪除</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FixData Modal-->
+    <div class="modal fade" id="fix_data_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">修改資料</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3 text-center" id="fix_modal_div">
+                            <label for="fix_modal_data" id="fix_modal_label">狀態</label>
+
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildTaskStatusWrong">請輸入正確內容</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" id="fix_modal_cancel">取消</button>
+                    <button class="btn btn-primary" type="button" id="fix_modal_check">確認修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Import and configure the Firebase SDK -->
+    <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+    <!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-performance.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js"></script>
+    <!-- Initialize Firebase -->
+    <!-- <script src="/__/firebase/init.js"></script> -->
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js "></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js "></script>
+
+    <!-- Mine Script -->
+    <script src="js/cleanhouse.js"></script>
+
+</body>
+
+</html>

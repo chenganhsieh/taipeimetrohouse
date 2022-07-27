@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="house monitor system">
+    <meta name="author" content="pigoo833">
+
+    <title>大都會物業房務管理系統</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css">
+    <!-- If you use the default popups, use this. -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
+    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/default.css">
+    <link rel="stylesheet" type="text/css" href="./css/icons.css">
+    <link rel="icon" href="img/logo.jpg" />
+    <!-- Custom styles for this template-->
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">大都會物業房務管理系統</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="tasks.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">待辦事項</span></a>
+                <a class="nav-link" href="infohouse.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">即時資訊</span></a>
+                <a class="nav-link" href="fixhouse.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">工務管理</span></a>
+                <a class="nav-link" href="cleanhouse.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">房務管理</span></a>
+                <a class="nav-link" href="newhouse.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">新增房型</span></a>
+                <a class="nav-link" href="accountmanage.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">帳戶管理</span></a>
+                <a class="nav-link" href="task.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">指派任務</span></a>
+                <!-- <a class="nav-link" href="buildtask.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">維修事項</span></a> -->
+                <a class="nav-link" href="rent_calendar.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span style="text-align: center">租金管理</span></a>
+            </li>
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+                    <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100" id="navbarTogglerChild">
+                        <ul class="navbar-nav mr-auto nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="add_rent">新增租約</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="add_money">繳交費用</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="rent_money">租金表</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="ele_money">電費</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="wat_money">水費</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="mag_money">管理費</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="gas_money">瓦斯費</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="obj_money">物件費</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="fix_money">修繕費</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="other_money">其他</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <p class="mx-auto mb-1 mr-2 text-primary">選項 <i class="fa fa-angle-down"></i></p>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                <ul class="list-group">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="add_rent">新增租約</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="add_money">繳交費用</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="rent_money">租金表</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="ele_money">電費</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="wat_money">水費</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="mang_money">管理費</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="gas_money">瓦斯費</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="obj_money">物件費</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="fix_money">修繕費</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-primary" href="#" onclick="switch_task(this)" id="other_money">其他</a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </li>
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 h4" id="displayname"></span>
+                                <img class="img-profile rounded-circle" src="./img/profile_placeholder.png" id="displayImage">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 hidden class="h3 mb-0 text-gray-800" id="div_header">新增項目</h1>
+                    </div>
+                    <div class="row" id="calendar_div">
+                        <div class="col-md-3 col-xs-12 col-lg-3">
+                            <div class="lnb-new-schedule mt-2">
+                                <button id="btn-new-schedule" type="button" class="btn btn-block lnb-new-schedule-btn btn-secondary" data-toggle="modal">
+                                新增租約</button>
+                            </div>
+                            <div class="mt-2">
+                                <button id="export_data" type="button" class="btn btn-block btn-secondary" data-toggle="modal">
+                                下載本月報表
+                                </button>
+                            </div>
+                            <hr class="sidebar-divider my-0 mt-2">
+                            <div id="lnb-calendars" class="lnb-calendars">
+                                <div class="col">
+                                    <div class="row-12">
+                                        <div class="col-12 mb-1">
+                                            <label for="serachRooms">選擇房源</label>
+                                            <select class="custom-select d-block w-100" id="serachRooms" required>
+                                                <option value="">選擇...</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                    <div class="lnb-calendars-item" class="row-12">
+                                        <label>
+                                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
+                                        <span></span>
+                                        <strong>查看全部</strong>
+                                    </label>
+                                    </div>
+                                </div>
+                                <div id="calendarList">
+                                </div>
+                                <!-- class="lnb-calendars-d1" -->
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-lg-9 container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="menu">
+                                        <span class="dropdown">
+                                        <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="true">
+                                            <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
+                                            <span id="calendarTypeName">Dropdown</span>&nbsp;
+                                        <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+                                            <li role="presentation">
+                                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
+                                                    <i class="calendar-icon ic_view_week"></i>2 周
+                                                </a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
+                                                    <i class="calendar-icon ic_view_month"></i>月
+                                                </a>
+                                            </li>
+                                            <li role="presentation" class="dropdown-divider"></li>
+                                            <li role="presentation">
+                                                <a role="menuitem" data-action="toggle-start-day-1">
+                                                    <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+                                                    <span class="checkbox-title"></span>星期一為開頭
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        </span>
+                                        <span id="menu-navi">
+                                        <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">今天</button>
+                                        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+                                            <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+                                            <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+                                        </button>
+                                        </span>
+                                        <span id="renderRange" class="render-range"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="height: 800px;">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                    <div hidden class="row" id="add_money_div">
+                        <div class="col-md-12 order-md-1">
+                            <form class="needs-validation" novalidate>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="buildTaskRents">類型</label>
+                                        <select class="custom-select d-block w-100" id="buildTaskRents" required>
+                                            <option value="" >選擇...</option>
+                                            <option value="租金">租金</option>
+                                            <option value="電費">電費</option>
+                                            <option value="水費">水費</option>
+                                            <option value="管理費">管理費</option>
+                                            <option value="瓦斯費">瓦斯費</option>
+                                            <option value="物件費">物件費</option>
+                                            <option value="物件費">修繕費</option>
+                                            <option value="其他">其他</option>
+                                            </select>
+                                        <div class="text-center">
+                                            <p hidden style="font-size:1em; color:red;" id="buildTaskRentsWrong">請選擇房源</p>
+                                        </div>
+
+                                    </div>
+                                    <div hidden class="col-md-6 mb-3" id="buildTaskRoomsScope2">
+                                        <label for="buildTaskRooms2">房源</label>
+                                        <select class="custom-select d-block w-100" id="buildTaskRooms2" required>
+                                            <option value="">選擇...</option>
+                                            </select>
+                                        <div class="text-center">
+                                            <p hidden style="font-size:1em; color:red;" id="buildTaskRooms2Wrong">請選擇房源</p>
+                                        </div>
+
+                                    </div>
+                                    <div hidden class="col-md-6 mb-3" id="buildTaskRoomsNumScope2">
+                                        <label for="buildTaskRoomsNum2">房號</label>
+                                        <select class="custom-select d-block w-100" id="buildTaskRoomsNum2" required>
+                                            <option value="">選擇...</option>
+                                            </select>
+                                        <div class="text-center">
+                                            <p hidden style="font-size:1em; color:red;" id="buildTaskRoomsNum2Wrong">請選擇房號</p>
+                                        </div>
+
+                                    </div>
+                                    <div hidden class="col-md-6 mb-3" id="buildTaskPersonScope2">
+                                        <label for="buildTaskPerson">房客</label>
+                                        <select class="custom-select d-block w-100" id="buildTaskPerson" required>
+                                            <option value="">選擇...</option>
+                                            </select>
+                                        <div class="text-center">
+                                            <p hidden style="font-size:1em; color:red;" id="buildTaskPersonWrong">請選擇房客</p>
+                                        </div>
+
+                                    </div>
+                                    <div hidden class="col-md-12  mb-3" id="buildRentdateScope">
+                                        <label for="buildTaskdate">繳交日期</label>
+                                        <input type="date" class="form-control" id="buildTaskdate" placeholder="" value="" required>
+                                        <div class="text-center">
+                                            <p hidden style="font-size:1em; color:red;" id="buildTaskdateWrong">請選擇日期</p>
+                                        </div>
+                                    </div>
+                                    <div hidden class="col-md-12  mb-3" id="buildRentmonthScope">
+                                        <label for="buildTaskmonth">月份</label>
+                                        <input type="month" class="form-control " id="buildTaskmonth" placeholder=" " value="" required>
+                                        <div class="text-center ">
+                                            <p hidden style="font-size:1em; color:red; " id="buildTaskmonthWrong">請選擇月份</p>
+                                        </div>
+                                    </div>
+                                    <div hidden class="col-md-6 mb-3 " id="buildRentElectOrgScope">
+                                        <label for="cleancost ">上個月度數</label>
+                                        <div class="input-group ">
+                                            <div class="input-group-prepend ">
+                                                <span class="input-group-text ">#</span>
+                                            </div>
+                                            <input type="number" class="form-control " id="buildRentElectOrg" placeholder="0" value="" required>
+                                            <div class="text-center ">
+                                                <p hidden style="font-size:1em; color:red; " id="buildRentElectWrong">請輸入正確度數</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div hidden class="col-md-6 mb-3 " id="buildRentElectScope">
+                                        <label for="cleancost ">本月度數</label>
+                                        <div class="input-group ">
+                                            <div class="input-group-prepend ">
+                                                <span class="input-group-text ">#</span>
+                                            </div>
+                                            <input type="number" class="form-control " id="buildRentElect" placeholder="0" value="" required>
+                                            <div class="text-center ">
+                                                <p hidden style="font-size:1em; color:red; " id="buildRentElectWrong">請輸入正確度數</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div hidden class="col-md-12 mb-3 " id="buildRentObjectScope">
+                                        <label for="cleancost ">內容</label>
+                                        <div class="input-group ">
+                                            <div class="input-group-prepend ">
+                                                <span class="input-group-text "><i class="fas fa-archive"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control " id="buildRentObj" placeholder="項目" value=" " required>
+                                            <div class="text-center ">
+                                                <p hidden style="font-size:1em; color:red; " id="buildRentObjWrong">請輸入正確物品</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div hidden class="col-md-6 mb-3 " id="buildRentCostScope">
+                                        <label for="cleancost ">金額</label>
+                                        <div class="input-group ">
+                                            <div class="input-group-prepend ">
+                                                <span class="input-group-text ">$</span>
+                                            </div>
+                                            <input type="number " class="form-control " id="rentCost" placeholder="0 " value="" required>
+                                            <div class="text-center ">
+                                                <p hidden style="font-size:1em; color:red; " id="rentCostWrong">請輸入正確金額</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div hidden class="col-md-6 mb-3 " id="buildRentType">
+                                        <label for="buildRentTypeSelect">繳交方式</label>
+                                        <select class="custom-select d-block w-100" id="buildRentTypeSelect" required>
+                                            <option value="transfer">匯款</option>
+                                            <option value="cash">現金</option>
+                                            </select>
+                                    </div>
+
+                                    <div hidden class="col-md-12 mb-3 text-center" id="sendBuildTask_div">
+                                        <button class="btn btn-primary  " type="button" id="sendBuildTask">新增</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div hidden class="row" id="room_info_div">
+                        <div class="col-md-4 mb-3" id="searchYearScope">
+                            <label for="searchYear">年份</label>
+                            <input type="text" class="form-control " id="searchYear" placeholder=" " value=" " required>
+                            <div class="text-center ">
+                                <p hidden style="font-size:1em; color:red; " id="searchYearWrong">請選擇年份</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3" id="searchMonthScope">
+                            <label for="searchMonth">月份</label>
+                            <input type="text" class="form-control " id="searchMonth" placeholder=" " value=" " required>
+                            <div class="text-center ">
+                                <p hidden style="font-size:1em; color:red; " id="searchMonthWrong">請選擇月份</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3" id="serachHouseScope">
+                            <label for="serachRooms2">房源</label>
+                            <select class="custom-select d-block w-100" id="serachRooms2" required>
+                                <option value="" >選擇...</option>
+                                </select>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="serachRooms2Wrong">請選擇房源</p>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4 mb-3" id="serachRoomsScope">
+                            <label for="serachRoomsNum2">房間</label>
+                            <select class="custom-select d-block w-100" id="serachRoomsNum2" required>
+                                <option value="" >選擇...</option>
+                                </select>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="serachRoomsNum2Wrong">請選擇房間</p>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mb-3 text-center" id="search_button_div">
+                            <button class="btn btn-primary" type="button" id="search_button">查詢</button>
+                        </div>
+                        <div hidden class="row col-12" id="rent_detail_div">
+                            <div class="col-md-6 mb-3 text-center">
+                                <label for="room_person">現在房客</label>
+                                <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="room_person">川普</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3 text-center">
+                                <label for="room_date">租約</label>
+                                <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="room_date">2020/01/01~2020/02/05</div>
+                            </div>
+                            <hr class="sidebar-divider col-md-12 mt-0 mb-0">
+                            <div class="col-md-4 mb-3 text-center">
+                                <label for="room_phone">手機</label>
+                                <div class="text-lg font-weight-bold text-primary text-uppercase mb-1" id="room_phone">0933923671
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 text-center">
+                                <label for="room_rent">租金</label>
+                                <div class="text-lg font-weight-bold text-primary mb-1" id="room_rent">27000
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 text-center">
+                                <label for="room_deposit">押金</label>
+                                <div class="text-lg font-weight-bold text-primary mb-1" id="room_deposit">27000
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div hidden class="card shadow mb-4 " id="money_status_div">
+                        <div class="card-header py-3 ">
+                            <h6 class="m-0 font-weight-bold text-primary ">收支列表</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="rentDataTable" width="100%">
+                                    <thead id="rentIngHeader">
+                                        <tr>
+                                            <th>月份</th>
+                                            <th>房間</th>
+                                            <th>租金狀況</th>
+                                            <th>繳交時間</th>
+                                            <th>繳交方式</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rentIngData">
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div hidden class="card shadow mb-4 " id="obj_status_div">
+                        <div class="card-header py-3 ">
+                            <h6 class="m-0 font-weight-bold text-primary ">收支列表</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="objDataTable" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>種類</th>
+                                            <th>房間</th>
+                                            <th>日期</th>
+                                            <th>金額</th>
+                                            <th>內容</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="objIngData">
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Area Chart -->
+                    <div hidden class="card shadow mb-4" id="chart_div">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">電費圖</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas id="electChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <footer class="sticky-footer bg-white" id="calendar_footer">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Pigoo833 2020</span>
+                        </div>
+                    </div>
+                </footer>
+
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer hidden class="sticky-footer bg-white" id="org_footer">
+                <div class="container my-auto ">
+                    <div class="copyright text-center my-auto ">
+                        <span>Copyright &copy; Pigoo833 2020</span>
+                    </div>
+                </div>
+            </footer>
+
+
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logout_modal_label">確定登出嗎?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">記得儲存您的資料再登出</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                    <button class="btn btn-primary" type="button" id="logout">登出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waiting Uploading Modal -->
+    <div class="modal" id="uploadModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">上傳中請稍候...</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        
+                    </button>
+                </div>
+
+                <div class="modal-body text-center">
+                    <div class="spinner-grow text-primary col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-secondary col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-success col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-danger col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-warning col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-info col-md-2 col-lg-2" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FixData Modal-->
+    <div class="modal fade" id="add_rent_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">新增租約</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" id="close_add_rent_modal_button">×</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 col-lg-6 mb-3" id="buildTaskRoomsScope">
+                            <label for="buildTaskRooms">房源</label>
+                            <select class="custom-select d-block w-100" id="buildTaskRooms" required>
+                                    <option value="">選擇...</option>
+                                    </select>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildTaskRoomsWrong">請選擇房源</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-lg-6 mb-3" id="buildTaskRoomsNumScope">
+                            <label for="buildTaskRoomsNum">房號</label>
+                            <select class="custom-select d-block w-100" id="buildTaskRoomsNum" required>
+                                    <option value="">選擇...</option>
+                                    </select>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildTaskRoomsNumWrong">請選擇房號</p>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 col-xs-12 mb-3 text-center">
+                            <label for="buildRentName">房客姓名</label>
+                            <input id="buildRentName" class="form-control" type="text">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentNameWrong">請輸入正確姓名</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 mb-3 text-center">
+                            <label for="buildRentPhone">手機</label>
+                            <input id="buildRentPhone" class="form-control" type="text">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentPhoneWrong">請輸入正確手機號碼</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 mb-3 text-center">
+                            <label for="buildRentEmail">信箱</label>
+                            <input id="buildRentEmail" class="form-control" type="text">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentEmailWrong">請輸入正確信箱</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 mb-3 text-center">
+                            <label for="buildRentUserId">身分證字號</label>
+                            <input id="buildRentUserId" class="form-control" type="text">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentUserIdWrong">請輸入正確身分證</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 text-center">
+                            <label for="buildRentMoney">租金</label>
+                            <input id="buildRentMoney" class="form-control" type="number">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentMoneyWrong">請輸入正確租金</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 text-center">
+                            <label for="buildRentDeposit">押金</label>
+                            <input id="buildRentDeposit" class="form-control" type="number">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentDepositWrong">請輸入正確押金</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 text-center">
+                            <label for="buildRentStartDate">開始日期</label>
+                            <input id="buildRentStartDate" class="form-control" type="date">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentStartDateWrong">請選擇正確日期</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 text-center">
+                            <label for="buildRentEndDate">結束日期</label>
+                            <input id="buildRentEndDate" class="form-control" type="date">
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="buildRentEndDateWrong">請選擇正確日期</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3 text-center mt-2">
+                            <label for="buildRentContract">契約上傳</label>
+                            <input type='file' id="buildRentContract" accept="application/pdf, application/msword" class="form-control" />
+                            <div class="text-center">
+                                <p style="font-size:1em;" id="buildRentEndDateWrong">檔案需小於10MB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" id="add_modal_cancel">取消</button>
+                    <button class="btn btn-primary" type="button" id="add_modal_check">新增資料</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rooms Modal-->
+    <div class="modal fade" id="rent_detail_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="room_device_header">房間名稱</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label for="room_person1">房客</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_person1">x</div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="room_date1">租約</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_date1">x</div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="room_phone1">手機</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_phone1">x</div>
+                        </div>
+                        <div class="col-6 col-xs-12 mb-3">
+                            <label for="room_email1">信箱</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_email1">x</div>
+                        </div>
+                        <div class="col-6 col-xs-12 mb-3">
+                            <label for="room_userid1">身分證字號</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_userid1">x</div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="room_money1">租金</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_money1">x</div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="room_deposit1">押金</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_deposit1">x</div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="room_contract_div">租約</label>
+                            <div class="text-lg font-weight-bold text-primary mb-1" id="room_contract_div">
+                                <a class="text-lg font-weight-bold text-primary mb-1" id="room_contract" target="_blank">x</a>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="send_invite_div">邀請簽約</label>
+                            <div class="send_invite_div">
+                                <button class="btn btn-secondary" id="send_invite">傳送邀請</button>
+                            </div>
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;" id="sendEmailInfo">沒有信箱資訊</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn_del btn-danger" type="button" id="del_data">刪除</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FixData Modal-->
+    <div class="modal fade" id="fix_data_modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">修改資料</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 mb-3 text-center" id="fix_modal_div">
+                            <label for="fix_modal_data" id="fix_modal_label">狀態</label>
+
+                            <div class="text-center">
+                                <p hidden style="font-size:1em; color:red;">請輸入正確內容</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" id="fix_modal_cancel">取消</button>
+                    <button class="btn btn-primary" type="button" id="fix_modal_check">確認修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- success Modal-->
+    <div class="modal " id="dataUploadModal" tabindex="-1 " role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">成功上傳資料</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" id="upLoadSuccess">
+        <span aria-hidden="true">×</span>
+      </button>
+                </div>
+                <div class="modal-body ">已將資料上傳</div>
+                <div class="modal-footer ">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">確定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Import and configure the Firebase SDK -->
+    <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+    <!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-performance.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js"></script>
+    <!-- Initialize Firebase -->
+    <!-- <script src="/__/firebase/init.js"></script> -->
+    <script src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
+    <!-- <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script> -->
+    <!-- <script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+
+
+    <script src="./js/tui-calendars.js"></script>
+    <script src="./js/calendars.js"></script>
+    <script src="./js/schedules.js"></script>
+    <script src="./js/app.js"></script>
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+    <script src="vendor/bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap-datepicker-TW.min.js"></script>
+    <script src="./js/buildrent.js"></script>
+
+</body>
+
+</html>

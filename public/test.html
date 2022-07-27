@@ -1,0 +1,183 @@
+<head>
+    <meta charset="utf-8">
+    <title>MyFirebaseFirstApp</title>
+    <base href="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="manifest" href="manifest.json">
+
+</head>
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-messaging.js"></script>
+
+<script>
+    var messaging = null;
+
+    $(document).ready(function() {
+
+        // Firebase 專案設定
+        var firebaseConfig = {
+            apiKey: "AIzaSyDgu1aSqfLX-LIPabasyXZKOpkntu1zZ8c",
+            authDomain: "eatfood-b38e7.firebaseapp.com",
+            databaseURL: "https://eatfood-b38e7.firebaseio.com",
+            projectId: "eatfood-b38e7",
+            storageBucket: "eatfood-b38e7.appspot.com",
+            messagingSenderId: "143139701423",
+            appId: "1:143139701423:web:ba1fbd55e8b55e55a34a5a",
+            measurementId: "G-GQ27ZK9QBW"
+        };
+
+        // 初始firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // 指定 firebase-messaging-sw.js 的路徑與本　html 檔相同
+        navigator.serviceWorker.register('firebase-messaging-sw.js')
+            .then((registration) => {
+                messaging.useServiceWorker(registration);
+            });
+
+        // 啟動　Firebase Messaging
+        messaging = firebase.messaging();
+
+        // 收到訊息時的處理(前景)
+        messaging.onMessage(function(payload) {
+
+            console.log('onMessage run');
+
+            // 網頁本身
+            $('#MessageZone').append("Message received :" + JSON.stringify(payload) + "<br><br>")
+
+            //如果可以顯示通知就做顯示通知
+            if (Notification.permission === 'granted') {
+                notifyMe(payload);
+            }
+        });
+
+        // 視窗提示訊息
+        function notifyMe(payload) {
+
+            if (!("Notification" in window)) {
+                console.log("This browser does not support desktop notification");
+            } else if (Notification.permission === "granted") {
+                show_win(payload);
+            } else if (Notification.permission !== 'denied' || Notification.permission === "default") {
+                // 再次請求授權
+                Notification.requestPermission(function(permission) {
+                    if (permission === "granted") {
+                        show_win(payload);
+                    };
+                });
+            };
+        };
+
+        // 視窗訊息
+        function show_win(payload) {
+
+            console.log('onMessage: ', payload);
+            var notifyMsg = payload.data;
+            var notification = new Notification(notifyMsg.title, {
+                body: notifyMsg.body,
+                icon: notifyMsg.icon
+            });
+
+            notification.onclick = function(e) { // 綁定點擊事件
+                e.preventDefault(); // prevent the browser from focusing the Notification's tab
+                window.open(notifyMsg.click_action);
+            }
+
+            // var notification = new Notification(MessageContent);
+            // setTimeout(notification.close.bind(notification), 2000);
+        }
+
+        // 刪除　Device Token 的動作
+        $("#deleteToken").click(function() {
+
+            //取得Token
+            messaging.getToken()
+                .then(function(currentToken) {
+
+                    //刪除後台token
+                    sendTokenToServer(currentToken, 1);
+
+                    // 刪除Token
+                    messaging.deleteToken(currentToken)
+                        .then(function() {
+                            console.log('Token deleted.');
+                        })
+                        .catch(function(err) {
+                            console.log('Unable to delete token. ', err);
+                        });
+                })
+                .catch(function(err) {
+                    console.log('Error retrieving Instance ID token. ', err);
+                });
+        });
+
+        // 要求　Device Token 的動作
+        $("#requestPermission").click(function() {
+
+            // 允許請求
+            messaging.requestPermission()
+                .then(function() {
+                    // 獲得允許
+                    console.log('Notification permission granted.');
+                    messaging.getToken() // 取得Token
+                        .then(function(currentToken) {
+
+                            //紀錄token
+                            sendTokenToServer(currentToken, 2);
+
+                            // 顯示Token
+                            if (currentToken) {
+                                $("#Token").html("<br/>Device Token:<br/><br/>" + currentToken);
+                            } else {
+                                $('#Token').html('Get Token Failed');
+                            };
+                        })
+                        .catch(function(err) {
+                            $('#Token').html('Unable to get permission to send message 1');
+                        });
+                })
+                .catch(function(err) {
+                    $('#Token').html('Unable to get permission to send message 2');
+                });
+        });
+
+        // 紀錄Token
+        function sendTokenToServer(currentToken, mode) {
+
+            $.ajax({
+                url: 'change_token.php',
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                data: {
+                    'token': currentToken,
+                    'change': mode
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    alert("發生錯誤" + errorThrown);
+                    return false;
+                },
+                success: function(data) {
+                    if (data.code == 0) {}
+                }
+            });
+        }
+
+    });
+</script>
+
+<button id="requestPermission">Request Permission</button>
+
+<button id="deleteToken">deleteToken</button>
+
+<div id="Token" style="max-width:300px;word-break: break-all;"></div>
+<br>
+<hr><br>
+<div id="MessageZone"></div>
